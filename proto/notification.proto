@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package notification;
+
+option java_package = "com.jnicram.notification";
+option java_outer_classname = "NotificationServiceProto";
+option java_multiple_files = true;
+
+service NotificationService {
+
+  // simple unary ping-pong call
+  rpc ping(PingRequest) returns (PingResponse);
+
+  // simple streaming call
+  rpc notify(NotifyRequest) returns (stream Message);
+}
+
+message PingRequest {
+  string echoMessage = 1;
+}
+
+message PingResponse {
+  string echoMessage = 1;
+  int64 timestamp = 2;
+}
+
+message NotifyRequest {
+  string username = 1;
+}
+
+message Message {
+  Status status = 1;
+  string message = 2;
+  repeated string data = 3;
+
+  enum Status {
+    UNKNOWN = 0;
+    STATUS_A = 1;
+    STATUS_B = 2;
+    STATUS_C = 3;
+  }
+}
