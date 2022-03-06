@@ -12,7 +12,10 @@ service NotificationService {
   rpc ping(PingRequest) returns (PingResponse);
 
   // simple streaming call
-  rpc notify(NotifyRequest) returns (stream Message);
+  rpc serverSideStreaming(NotifyRequest) returns (stream NotifyResponse);
+
+  // simple bidirectional call
+  rpc bidirectionalStreaming(stream NotifyRequest) returns (stream NotifyResponse);
 }
 
 message PingRequest {
@@ -28,7 +31,7 @@ message NotifyRequest {
   string username = 1;
 }
 
-message Message {
+message NotifyResponse {
   Status status = 1;
   string message = 2;
   repeated string data = 3;
